@@ -30,7 +30,7 @@ public class PrintFieldAscendingVenue implements CommandInterface {
         for (Ticket t : CollectionManager.values()) {
             setVenue.add(t.getVenue());
         }
-        setVenue.stream().sorted((a,b) -> {return a.compareTo(b);})
+        setVenue.stream().sorted(Venue::compareTo)
                          .forEach(a -> AnswerManager.addQueue(sChannel, a.toString()));
         return true;
     }

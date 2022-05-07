@@ -25,7 +25,7 @@ public class ReplaceIfGreater implements CommandInterface {
      * @return true on success and false if not.
      */
     public boolean execute(SocketChannel sChannel, Object arg) {
-        if(arg == null || !(arg instanceof Ticket)) {
+        if(!(arg instanceof Ticket)) {
             AnswerManager.addQueue(sChannel, "-createObject replace_if_greater");
             return false;
         }
