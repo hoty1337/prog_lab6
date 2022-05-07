@@ -1,0 +1,4 @@
+show
+execute_script script
+help
+remove_key 1
