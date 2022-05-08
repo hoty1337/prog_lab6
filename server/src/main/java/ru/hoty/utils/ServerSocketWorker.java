@@ -36,10 +36,6 @@ public class ServerSocketWorker {
         return sel;
     }
 
-    public SelectionKey getSelectionKey() {
-        return key;
-    }
-
     public void setSelectionKey(SelectionKey key) {
         this.key = key;
     }
@@ -54,7 +50,7 @@ public class ServerSocketWorker {
             client.configureBlocking(false);
             client.register(sel, SelectionKey.OP_READ);
         } catch(IOException e) {
-            logger.error(e.getLocalizedMessage());;
+            logger.error(e.getLocalizedMessage());
         }
     }
 
@@ -80,7 +76,7 @@ public class ServerSocketWorker {
                 //System.out.println("Клиент " + client.getRemoteAddress().toString() + " отключился.");
                 logger.info("Client disconnected: " + client.getRemoteAddress());
                 key.cancel();
-                new Save().execute(client, null);
+                new Save().execute();
             } catch (IOException e1) {
                 logger.error(e1.getLocalizedMessage());
             }
@@ -88,7 +84,7 @@ public class ServerSocketWorker {
     }
 
     public void write(Answer obj) {
-        ByteBuffer buffer = ByteBuffer.allocate(4096);
+        ByteBuffer buffer;
         SocketChannel client = (SocketChannel) key.channel();
         try {
             buffer = ByteBuffer.wrap(Serializer.serialize(obj));
@@ -104,7 +100,7 @@ public class ServerSocketWorker {
                 //System.out.println("Клиент " + client.getRemoteAddress().toString() + " отключился.");
                 logger.info("Client disconnected: " + client.getRemoteAddress());
                 key.cancel();
-                new Save().execute(client, null);
+                new Save().execute();
             } catch (IOException e1) {
                 logger.error(e1.getLocalizedMessage());
             }
