@@ -45,7 +45,7 @@ public class RemoveLowerKey implements CommandInterface {
         Set<Long> keySet = CollectionManager.keySet();
         Set<Long> keysToDelete = new HashSet<>();
         boolean isDeleted = false;
-        AnswerManager.addQueue(sChannel, "Удалены элементы:");
+        AnswerManager.addQueue(sChannel, "Removed elements:");
         for (Long t : keySet) {
             if(t < uId) {
                 keysToDelete.add(t);
@@ -55,7 +55,7 @@ public class RemoveLowerKey implements CommandInterface {
         }
         CollectionManager.removeKey(keysToDelete);
         if(!isDeleted) {
-            AnswerManager.addQueue(sChannel, TextFormatter.toYellow("\nНи один элемент не был удален."));
+            AnswerManager.addQueue(sChannel, TextFormatter.toYellow("\nNothing was deleted."));
         }
         
         return true;
