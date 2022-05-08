@@ -14,8 +14,6 @@ public class PrintUniquePrice implements CommandInterface {
 
     /**
      * Class constructor
-     * 
-     * @param cManager  - Class to work with org.hoty.collection.
      */
     public PrintUniquePrice() {
         Help.addCmd("print_unique_price", " - prints all unique prices.");
@@ -27,13 +25,11 @@ public class PrintUniquePrice implements CommandInterface {
      * @return true on success and false if not.
      */
     public boolean execute(SocketChannel sChannel, Object arg) {
-        Set<Float> setPrices = new HashSet<>();
-        for (Ticket t : CollectionManager.values()) {
-            setPrices.add(t.getPrice());
-        }
-        for (Float price : setPrices) {
-            AnswerManager.addQueue(sChannel, price.toString());
-        }
+        CollectionManager.values().stream()
+                .map(Ticket::getPrice)
+                .distinct()
+                .forEachOrdered(a -> AnswerManager.addQueue(sChannel, a.toString()));
+
         return true;
     }
 }
