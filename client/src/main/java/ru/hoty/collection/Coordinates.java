@@ -23,4 +23,13 @@ public class Coordinates implements Serializable {
     public Float getY() {
         return y;
     }
+
+    public int compareTo(Coordinates other) {
+        if(getX() * getX() + getY() * getY() ==
+                other.getX() * other.getX() + other.getY() * other.getY()) {
+            return 0;
+        }
+        return (getX() * getX() + getY() * getY() >
+                other.getX() * other.getX() + other.getY() * other.getY() ? 1 : -1);
+    }
 }
