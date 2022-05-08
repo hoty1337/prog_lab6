@@ -26,12 +26,10 @@ public class PrintFieldAscendingVenue implements CommandInterface {
      * @return true on success and false if not.
      */
     public boolean execute(SocketChannel sChannel, Object arg) {
-        Set<Venue> setVenue = new HashSet<>();
-        for (Ticket t : CollectionManager.values()) {
-            setVenue.add(t.getVenue());
-        }
-        setVenue.stream().sorted(Venue::compareTo)
-                         .forEach(a -> AnswerManager.addQueue(sChannel, a.toString()));
+        CollectionManager.values().stream()
+                .map(Ticket::getVenue)
+                .sorted(Venue::compareTo)
+                .forEach(a -> AnswerManager.addQueue(sChannel, a.toString()));
         return true;
     }
 }
