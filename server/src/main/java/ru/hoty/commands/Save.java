@@ -15,23 +15,16 @@ import ru.hoty.parser.DataParser;
 /**
  * Class for saving org.hoty.collection to file.
  */
-public class Save implements CommandInterface {
+public class Save {
 
     static final Logger logger = LogManager.getLogger();
-
-    /**
-     * Class constructor
-     */
-    public Save() {
-        Help.addCmd("save", " - saves org.hoty.collection to file.");
-    }
 
     /**
      * Saves org.hoty.collection to file.
      * 
      * @return true on success and false if not.
      */
-    public boolean execute(SocketChannel sChannel, Object arg) {
+    public boolean execute() {
         File fFile = new File(CollectionManager.getFile());
         if(!fFile.exists() || !fFile.canWrite()) {
             logger.error("Can't save org.hoty.collection. File doesn't exist or opened with Only-Read flag.");
