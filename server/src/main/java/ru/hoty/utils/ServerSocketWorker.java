@@ -65,7 +65,6 @@ public class ServerSocketWorker {
                 CommandManager.addQueue(client, cmd);
                 logger.info("Received " + data + " bytes from " + client.getRemoteAddress() + "\n" + cmd.getCommand());
             } catch (ClassCastException | ClassNotFoundException e) {
-                //System.out.println("Клиент вернул некорректный ответ.");
                 logger.error(e.getLocalizedMessage());
                 logger.warn("Client returned bad answer.");
             }
@@ -73,7 +72,6 @@ public class ServerSocketWorker {
             client.register(sel, SelectionKey.OP_WRITE);
         } catch(IOException e) {
             try {
-                //System.out.println("Клиент " + client.getRemoteAddress().toString() + " отключился.");
                 logger.info("Client disconnected: " + client.getRemoteAddress());
                 key.cancel();
                 new Save().execute();
@@ -97,14 +95,12 @@ public class ServerSocketWorker {
             client.register(sel, SelectionKey.OP_READ);
         } catch(IOException e) {
             try {
-                //System.out.println("Клиент " + client.getRemoteAddress().toString() + " отключился.");
                 logger.info("Client disconnected: " + client.getRemoteAddress());
                 key.cancel();
                 new Save().execute();
             } catch (IOException e1) {
                 logger.error(e1.getLocalizedMessage());
             }
-            //e.printStackTrace();
         }
     }
 }
