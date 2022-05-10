@@ -28,18 +28,6 @@ public class Ticket implements Comparable<Ticket>, Serializable {
         venue = null;
     }
 
-    public Ticket(Long tId, String tName, Coordinates tCoordinates, LocalDateTime tCreationDate, 
-                  Float tPrice, String tComment, TicketType tType, Venue tVenue) {
-        id = tId;
-        name = tName;
-        coordinates = tCoordinates;
-        creationDate = tCreationDate;
-        price = tPrice;
-        comment = tComment;
-        type = tType;
-        venue = tVenue; 
-    }
-
     public void setId(Long tId) {
         id = tId;
     }
@@ -110,7 +98,7 @@ public class Ticket implements Comparable<Ticket>, Serializable {
                 "Id:\t\t\t" + TextFormatter.toPurple(id + "\n") +
                 "Coordinates:\t\t" + TextFormatter.toPurple(coordinates + "\n") +
                 "Creation date:\t" + TextFormatter.toPurple(
-                    creationDate.format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")) + "\n") +
+                creationDate.format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")) + "\n") +
                 "Price:\t\t" + TextFormatter.toPurple(price + "\n") +
                 "Comment:\t\t" + TextFormatter.toPurple(comment + "\n") +
                 "Ticket type:\t\t" + TextFormatter.toPurple(type + "\n") +
@@ -133,31 +121,29 @@ public class Ticket implements Comparable<Ticket>, Serializable {
 
         Ticket other = (Ticket) otherObj;
 
-        if(((this.getPrice() == null) && (other.getPrice() != null)) || 
-           ((this.getPrice() != null) && (other.getPrice() == null))) {
+        if(((this.getPrice() == null) && (other.getPrice() != null)) ||
+                ((this.getPrice() != null) && (other.getPrice() == null))) {
             return false;
         }
 
         if(((this.getType() == null) && (other.getType() != null)) ||
-           ((this.getType() != null) && (other.getType() == null))) {
+                ((this.getType() != null) && (other.getType() == null))) {
             return false;
         }
 
         return (this.getName().equals(other.getName())
-            && this.getCoordinates().equals(other.getCoordinates())
-            && this.getCreationDate().equals(other.getCreationDate())
-            && this.getPrice().equals(other.getPrice())
-            && ((this.getComment().equals(other.getComment())) ||
+                && this.getCoordinates().equals(other.getCoordinates())
+                && this.getCreationDate().equals(other.getCreationDate())
+                && this.getPrice().equals(other.getPrice())
+                && ((this.getComment().equals(other.getComment())) ||
                 (this.getComment() == null && other.getComment() == null))
-            && ((this.getType().equals(other.getType())) ||
+                && ((this.getType().equals(other.getType())) ||
                 (this.getType() == null && other.getType() == null))
-            && this.getVenue().equals(other.getVenue()));
+                && this.getVenue().equals(other.getVenue()));
     }
 
     @Override
     public int compareTo(Ticket other) {
-        if(getId() > other.getId()) return 1;
-        if(getId() < other.getId()) return -1;
-        return getCreationDate().compareTo(other.getCreationDate());
+        return getCoordinates().compareTo(other.getCoordinates());
     }
 }
