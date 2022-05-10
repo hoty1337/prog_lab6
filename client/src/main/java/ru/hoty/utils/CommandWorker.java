@@ -24,7 +24,7 @@ public class CommandWorker {
         } else if(request[0].contains("-executeScript")) {
             new ExecuteScript(sWorker, ConsoleWorker.getScanner(), new LinkedList<>()).execute(request.length > 1 ? request[1] : null);
         }
-        if(!ans.getAnswer().contains("-createObject") && !ans.getAnswer().contains("-executeScript")) {
+        if(ans != null && !ans.getAnswer().contains("-createObject") && !ans.getAnswer().contains("-executeScript")) {
             System.out.println(ans.getAnswer());
         }
         return true;
