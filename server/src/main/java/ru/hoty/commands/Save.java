@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.nio.channels.SocketChannel;
 
 import ru.hoty.collection.CollectionManager;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +26,7 @@ public class Save {
     public boolean execute() {
         File fFile = new File(CollectionManager.getFile());
         if(!fFile.exists() || !fFile.canWrite()) {
-            logger.error("Can't save org.hoty.collection. File doesn't exist or opened with Only-Read flag.");
+            logger.error("Can't save collection. File doesn't exist or opened with Only-Read flag.");
             return false;
         }
         try (OutputStream oStream = new FileOutputStream(CollectionManager.getFile())) {
