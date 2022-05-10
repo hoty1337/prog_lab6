@@ -3,9 +3,9 @@ package ru.hoty.collection;
 import java.io.Serializable;
 
 public class Venue implements Serializable {
-    private Long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private int capacity; //Значение поля должно быть больше 0
+    private final Long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private final String name; //Поле не может быть null, Строка не может быть пустой
+    private final int capacity; //Значение поля должно быть больше 0
 
     public Venue(Long id, String name, int capacity) {
         this.id = id;
@@ -31,7 +31,7 @@ public class Venue implements Serializable {
     public int getCapacity() {
         return capacity;
     }
-    
+
     public Long getId() {
         return id;
     }
