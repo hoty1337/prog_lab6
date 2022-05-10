@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 import ru.hoty.collection.CollectionManager;
+import ru.hoty.commands.Save;
 import ru.hoty.parser.CommandParser;
-import ru.hoty.utils.Answer;
-import ru.hoty.utils.AnswerManager;
-import ru.hoty.utils.Command;
-import ru.hoty.utils.CommandManager;
-import ru.hoty.utils.ServerSocketWorker;
+import ru.hoty.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,17 +21,24 @@ public class Main {
     public static void main(String[] args) {
 		final int PORT = 1337;
 		final String FILE_ENV = "FILE_PATH";
+		final ConsoleWorker consoleWorker = new ConsoleWorker(new Scanner(System.in));
+
 		if(!CollectionManager.setFilePath(FILE_ENV) ||
 			!CollectionManager.loadCollection()) {
-			logger.fatal("Can't load org.hoty.collection file on the path " + System.getenv(FILE_ENV));
+			logger.fatal("Can't load collection file on the path " + System.getenv(FILE_ENV));
 			System.exit(0);
 		}
         try {
 			ServerSocketWorker sWorker = new ServerSocketWorker(PORT);
 			logger.info("Server is running on port: " + PORT);
 			while(true) {
-				int readyChannels = sWorker.getSelector().select();
+				int readyChannels = sWorker.getSelector().select(1000);
+				String serverCmd = consoleWorker.checkConsoleInput();
+				if(serverCmd != null && serverCmd.equals("save")) {
+					new Save().execute();
+				}
 				if(readyChannels == 0) continue;
+
 
 				Set<SelectionKey> keys = sWorker.getSelector().selectedKeys();
 				for(Iterator<SelectionKey> iter = keys.iterator(); iter.hasNext(); ) {
