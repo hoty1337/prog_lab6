@@ -31,6 +31,7 @@ public class Main {
         try {
 			ServerSocketWorker sWorker = new ServerSocketWorker(PORT);
 			logger.info("Server is running on port: " + PORT);
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> new Save().execute()));
 			while(true) {
 				int readyChannels = sWorker.getSelector().select(1000);
 				String serverCmd = consoleWorker.checkConsoleInput();
