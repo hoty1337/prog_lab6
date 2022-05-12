@@ -3,8 +3,10 @@ package ru.hoty.commands;
 import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ru.hoty.collection.CollectionManager;
+import ru.hoty.collection.Ticket;
 import ru.hoty.utils.AnswerManager;
 import ru.hoty.utils.TextFormatter;
 
@@ -42,19 +44,17 @@ public class RemoveLowerKey implements CommandInterface {
             AnswerManager.addQueue(sChannel, TextFormatter.toRed("ID should be positive!"));
             return false;
         }
-        Set<Long> keySet = CollectionManager.keySet();
-        Set<Long> keysToDelete = new HashSet<>();
-        boolean isDeleted = false;
         AnswerManager.addQueue(sChannel, "Removed elements:");
-        for (Long t : keySet) {
-            if(t < uId) {
-                keysToDelete.add(t);
-                AnswerManager.addQueue(sChannel, TextFormatter.toYellow("ID = " + t));
-                isDeleted = true;
+        Set<Long> keysToDelete = CollectionManager.values().stream()
+                .map(Ticket::getId)
+                .filter(id -> id < uId)
+                .collect(Collectors.toSet());
+        if(!keysToDelete.isEmpty()) {
+            CollectionManager.removeKey(keysToDelete);
+            for (Long id : keysToDelete) {
+                AnswerManager.addQueue(sChannel, "ID: " + id + " ");
             }
-        }
-        CollectionManager.removeKey(keysToDelete);
-        if(!isDeleted) {
+        } else {
             AnswerManager.addQueue(sChannel, TextFormatter.toYellow("\nNothing was deleted."));
         }
         
